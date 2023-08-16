@@ -233,4 +233,4 @@ class GameHelper {
             return VERTICAL_INCREMENT;                        // place vertically
         }
     } //end getIncrement
-} //end class
+} //end class.
