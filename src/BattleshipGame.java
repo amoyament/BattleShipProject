@@ -11,11 +11,11 @@ public class BattleshipGame {
     public void setUpGame() {
         // Make the three ships and name them
         Battleship one = new Battleship();
-        one.setName("Aubrey");
+        one.setName("Justin");
         Battleship two = new Battleship();
-        two.setName("Avyanna");
+        two.setName("Osiel");
         Battleship three = new Battleship();
-        three.setName("Jynel");
+        three.setName("Ivan");
         // Insert the ships into the ArrayList
         battleships.add(one);
         battleships.add(two);
@@ -23,7 +23,7 @@ public class BattleshipGame {
 
         // Print game instructions for the user
         System.out.println("Your goal is to sink three Battleships!");
-        System.out.println("Aubrey, Avyanna, Jynel");
+        System.out.println("Justin, Osiel, Ivan");
         System.out.println("Try to sink all the ships with the fewest number of guesses.");
 
         // Use a for loop to iterate over ships
