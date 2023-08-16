@@ -1,6 +1,6 @@
 # Battleship Java Program
 
-This is a Battleship game coded with Java! The program allows you to play Battleship in the console. You will be trying to sink three battleships: Aubrey, Avyanna, and Jynel. Your goal is to sink all the battleships with the fewest number of guesses.
+This is a Battleship game coded with Java! The program allows you to play Battleship in the console. You will be trying to sink three battleships: Justin, Osiel, and Ivan. Your goal is to sink all the battleships with the fewest number of guesses.
 
 ## How the Code Functions
 
@@ -31,5 +31,7 @@ The code consists of three main classes:
 4. **Quit**: To quit the game, simply close the terminal or press `Ctrl+C`.
 
 ## Note
+
+In the GameHelper class lines 165, 176, and 195 are commented out for gameplay. If you would like to watch the placement process of the ships, you can uncomment these lines. When actually playing the game, these should be commented out. Otherwise the user will see where all ships are placed.
 
 Enjoy playing Battleship! If you have any questions or need further assistance, feel free to reach out.
