@@ -26,7 +26,7 @@ The code consists of three main classes:
    java BattleshipGame
    ```
 
-3. **Play**: Follow the on-screen instructions to input your guesses and play the game. The program will provide feedback on whether your guesses are hits, misses, or sunk ships.
+3. **Play**: Follow the on-screen instructions to input your guesses and play the game. The program will tell you if your guesses are hits, misses, or sunken ships.
 
 4. **Quit**: To quit the game, simply close the terminal or press `Ctrl+C`.
 
@@ -34,4 +34,4 @@ The code consists of three main classes:
 
 In the GameHelper class lines 165, 176, and 195 are commented out for gameplay. If you would like to watch the placement process of the ships, you can uncomment these lines. When actually playing the game, these should be commented out. Otherwise the user will see where all ships are placed.
 
-Enjoy playing Battleship! If you have any questions or need further assistance, feel free to reach out.
+Enjoy playing Battleship! If you have any questions or need further assistance, just let me know at amoyamen44@gmail.com.
