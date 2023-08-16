@@ -32,4 +32,6 @@ The code consists of three main classes:
 
 ## Note
 
+In the GameHelper class lines 165, 176, and 195 are commented out for gameplay. If you would like to watch the placement process of the ships, you can uncomment these lines. When actually playing the game, these should be commented out. Otherwise the user will see where all ships are placed.
+
 Enjoy playing Battleship! If you have any questions or need further assistance, feel free to reach out.
