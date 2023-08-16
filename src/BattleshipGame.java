@@ -111,7 +111,7 @@ class Battleship {
             if (locationCells.isEmpty()) {
                 result = "Sunk";
                 // Print a message indicating the ship is sunk
-                System.out.println("Ouch! You sunk " + name + "!");
+                System.out.println("Nice! You sunk " + name + "!");
             } else {
                 // The guess is a hit, but the ship is not sunk yet
                 result = "Hit";
