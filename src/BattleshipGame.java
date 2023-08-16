@@ -23,7 +23,7 @@ public class BattleshipGame {
 
         // Print game instructions for the user
         System.out.println("Your goal is to sink three Battleships!");
-        System.out.println("Justin, Osiel, Ivan");
+        System.out.println("Justin, Osiel, and Ivan");
         System.out.println("Try to sink all the ships with the fewest number of guesses.");
 
         // Use a for loop to iterate over ships
@@ -128,107 +128,109 @@ class GameHelper {
     private static final int GRID_LENGTH = 7;
     private static final int GRID_SIZE = 49;
     private static final int MAX_ATTEMPTS = 200;
-    static final int HORIZONTAL_INCREMENT = 1;
-    static final int VERTICAL_INCREMENT = GRID_LENGTH;
+
+    static final int HORIZONTAL_INCREMENT = 1;          // A better way to represent these two
+    static final int VERTICAL_INCREMENT = GRID_LENGTH;  // things is an enum (see Appendix B)
 
     private final int[] grid = new int[GRID_SIZE];
-
     private final Random random = new Random();
 
     private int startupCount = 0;
-
-    private static final GameHelper instance = new GameHelper();
-
-    public GameHelper() {
-    }
-
-    public static GameHelper getInstance() {
-        return instance;
-    }
 
     public String getUserInput(String prompt) {
         System.out.print(prompt + ": ");
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine().toLowerCase();
-    }
+    } //end getUserInput
 
     public ArrayList<String> placeStartup(int startupSize) {
-        int[] startupCoords = new int[startupSize];
-        int attempts = 0;
-        boolean success = false;
+        // holds index to grid (0 - 48)
+        int[] startupCoords = new int[startupSize];         // current candidate co-ordinates
+        int attempts = 0;                                   // current attempts counter
+        boolean success = false;                            // flag = found a good location?
 
-        startupCount++;
-        int increment = getIncrement();
+        startupCount++;                                     // nth Startup to place
+        int increment = getIncrement();                     // alternate vert & horiz alignment
 
-        while (!success && attempts++ < MAX_ATTEMPTS) {
-            int location = random.nextInt(GRID_SIZE);
+        while (!success & attempts++ < MAX_ATTEMPTS) {      // main search loop
+            int location = random.nextInt(GRID_SIZE);         // get random starting point
 
-            for (int i = 0; i < startupCoords.length; i++) {
-                startupCoords[i] = location;
-                location += increment;
+            for (int i = 0; i < startupCoords.length; i++) {  // create array of proposed coords
+                startupCoords[i] = location;                    // put current location in array
+                location += increment;                          // calculate the next location
             }
 
-            if (startupFits(startupCoords, increment) && coordsAvailable(startupCoords)) {
-                success = true;
-            }
-        }
+            // Test to make sure ships are being placed.
+            // Comment out when actually trying to play the game so you cannot "cheat"
+            // System.out.println("Trying: " + Arrays.toString(startupCoords));
 
-        savePositionToGrid(startupCoords);
+            if (startupFits(startupCoords, increment)) {      // startup fits on the grid?
+                success = coordsAvailable(startupCoords);       // ...and locations aren't taken?
+            }                                                 // end loop
+        }                                                   // end while
+
+        savePositionToGrid(startupCoords);                  // coords passed checks, save
         ArrayList<String> alphaCells = convertCoordsToAlphaFormat(startupCoords);
+        // Test to make sure ships are placed.
+        // Comment out when actually trying to play the game so you cannot "cheat"
+        // System.out.println("Placed at: "+ alphaCells);
         return alphaCells;
-    }
+    } //end placeStartup
 
     boolean startupFits(int[] startupCoords, int increment) {
         int finalLocation = startupCoords[startupCoords.length - 1];
         if (increment == HORIZONTAL_INCREMENT) {
+            // check end is on same row as start
             return calcRowFromIndex(startupCoords[0]) == calcRowFromIndex(finalLocation);
         } else {
-            return finalLocation < GRID_SIZE;
+            return finalLocation < GRID_SIZE;                 // check end isn't off the bottom
         }
-    }
+    } //end startupFits
 
     boolean coordsAvailable(int[] startupCoords) {
-        for (int coord : startupCoords) {
-            if (grid[coord] != 0) {
-                System.out.println("position: " + coord + " already taken.");
-                return false;
+        for (int coord : startupCoords) {                   // check all potential positions
+            if (grid[coord] != 0) {                           // this position already taken
+                // Test to make sure ships are being placed.
+                // Comment out when actually trying to play the game so you cannot "cheat"
+                // System.out.println("position: " + coord + " already taken.");
+                return false;                                   // NO success
             }
         }
-        return true;
-    }
+        return true;                                        // there were no clashes, yay!
+    } //end coordsAvailable
 
     void savePositionToGrid(int[] startupCoords) {
         for (int index : startupCoords) {
-            grid[index] = 1;
+            grid[index] = 1;                                  // mark grid position as 'used'
         }
-    }
+    } //end savePositionToGrid
 
     private ArrayList<String> convertCoordsToAlphaFormat(int[] startupCoords) {
-        ArrayList<String> alphaCells = new ArrayList<>();
-        for (int index : startupCoords) {
-            String alphaCoords = getAlphaCoordsFromIndex(index);
-            alphaCells.add(alphaCoords);
+        ArrayList<String> alphaCells = new ArrayList<String>();
+        for (int index : startupCoords) {                   // for each grid coordinate
+            String alphaCoords = getAlphaCoordsFromIndex(index); // turn it into an "a0" style
+            alphaCells.add(alphaCoords);                      // add to a list
         }
-        return alphaCells;
-    }
+        return alphaCells;                                  // return the "a0"-style coords
+    } // end convertCoordsToAlphaFormat
 
     String getAlphaCoordsFromIndex(int index) {
-        int row = calcRowFromIndex(index);
-        int column = index % GRID_LENGTH;
+        int row = calcRowFromIndex(index);                  // get row value
+        int column = index % GRID_LENGTH;                   // get numeric column value
 
-        String letter = ALPHABET.substring(column, column + 1);
+        String letter = ALPHABET.substring(column, column + 1); // convert to letter
         return letter + row;
-    }
+    } // end getAlphaCoordsFromIndex
 
     private int calcRowFromIndex(int index) {
         return index / GRID_LENGTH;
-    }
+    } // end calcRowFromIndex
 
     private int getIncrement() {
-        if (startupCount % 2 == 0) {
-            return HORIZONTAL_INCREMENT;
-        } else {
-            return VERTICAL_INCREMENT;
+        if (startupCount % 2 == 0) {                        // if EVEN Startup
+            return HORIZONTAL_INCREMENT;                      // place horizontally
+        } else {                                            // else ODD
+            return VERTICAL_INCREMENT;                        // place vertically
         }
-    }
-}
+    } //end getIncrement
+} //end class
